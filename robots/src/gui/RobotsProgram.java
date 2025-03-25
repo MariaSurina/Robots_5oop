@@ -10,7 +10,7 @@ public class RobotsProgram
     try {
       UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel"); //внешний вид приложения
 //        UIManager.setLookAndFeel("javax.swing.plaf.metal.MetalLookAndFeel");
-//        UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+//        UIManager.setLookAn dFeel(UIManager.getSystemLookAndFeelClassName());
 //        UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
     } catch (Exception e) {
       e.printStackTrace();
