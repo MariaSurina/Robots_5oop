@@ -1,5 +1,4 @@
 package gui;
-
 import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.Graphics;
@@ -10,9 +9,7 @@ import java.awt.event.MouseEvent;
 import java.awt.geom.AffineTransform;
 import java.util.Timer;
 import java.util.TimerTask;
-
 import javax.swing.JPanel;
-
 public class GameVisualizer extends JPanel
 {
     private final Timer m_timer = initTimer();
@@ -62,7 +59,6 @@ public class GameVisualizer extends JPanel
         });
         setDoubleBuffered(true);
     }
-
     protected void setTargetPosition(Point p)
     {
         m_targetPositionX = p.x;
@@ -73,7 +69,6 @@ public class GameVisualizer extends JPanel
     {
         EventQueue.invokeLater(this::repaint);
     }
-
     private static double distance(double x1, double y1, double x2, double y2)
     {
         double diffX = x1 - x2;
@@ -121,38 +116,24 @@ public class GameVisualizer extends JPanel
         return value;
     }
 
-    private void moveRobot(double velocity, double angularVelocity, double duration) {
+    private void moveRobot(double velocity, double angularVelocity, double duration)
+    {
         velocity = applyLimits(velocity, 0, maxVelocity);
         angularVelocity = applyLimits(angularVelocity, -maxAngularVelocity, maxAngularVelocity);
-
         double newX = m_robotPositionX + velocity / angularVelocity *
-                (Math.sin(m_robotDirection + angularVelocity * duration) -
+                (Math.sin(m_robotDirection  + angularVelocity * duration) -
                         Math.sin(m_robotDirection));
-        if (!Double.isFinite(newX)) {
+        if (!Double.isFinite(newX))
+        {
             newX = m_robotPositionX + velocity * duration * Math.cos(m_robotDirection);
         }
-
         double newY = m_robotPositionY - velocity / angularVelocity *
-                (Math.cos(m_robotDirection + angularVelocity * duration) -
+                (Math.cos(m_robotDirection  + angularVelocity * duration) -
                         Math.cos(m_robotDirection));
-        if (!Double.isFinite(newY)) {
+        if (!Double.isFinite(newY))
+        {
             newY = m_robotPositionY + velocity * duration * Math.sin(m_robotDirection);
         }
-
-        // Проверка границ и изменение направления
-        if (newX < 0 || newX > getWidth()) {
-            m_robotDirection = Math.PI - m_robotDirection; // Разворот по оси X
-        }
-        if (newY < 0 || newY > getHeight()) {
-            m_robotDirection = 2 * Math.PI - m_robotDirection; // Разворот по оси Y
-        }
-
-        // Корректировка позиции, если вышли за границы
-        if (newX < 0) newX = 0;
-        if (newX > getWidth()) newX = getWidth();
-        if (newY < 0) newY = 0;
-        if (newY > getHeight()) newY = getHeight();
-
         m_robotPositionX = newX;
         m_robotPositionY = newY;
         double newDirection = asNormalizedRadians(m_robotDirection + angularVelocity * duration);
@@ -202,7 +183,7 @@ public class GameVisualizer extends JPanel
         int robotCenterY = round(m_robotPositionY);
         AffineTransform t = AffineTransform.getRotateInstance(direction, robotCenterX, robotCenterY);
         g.setTransform(t);
-        g.setColor(Color.BLUE);
+        g.setColor(Color.MAGENTA);
         fillOval(g, robotCenterX, robotCenterY, 30, 10);
         g.setColor(Color.BLACK);
         drawOval(g, robotCenterX, robotCenterY, 30, 10);
@@ -216,7 +197,7 @@ public class GameVisualizer extends JPanel
     {
         AffineTransform t = AffineTransform.getRotateInstance(0, 0, 0);
         g.setTransform(t);
-        g.setColor(Color.RED);
+        g.setColor(Color.GREEN);
         fillOval(g, x, y, 5, 5);
         g.setColor(Color.BLACK);
         drawOval(g, x, y, 5, 5);

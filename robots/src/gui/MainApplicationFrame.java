@@ -1,6 +1,8 @@
 package gui;
 
-import javax.swing.*;
+import javax.swing.JDesktopPane;
+import javax.swing.JFrame;
+import javax.swing.JInternalFrame;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
@@ -10,33 +12,36 @@ public class MainApplicationFrame extends JFrame {
     private final JDesktopPane desktopPane = new JDesktopPane();
     private final MenuWindow menuWindow;
 
-    private LogWindow logWindow;
-    private GameWindow gameWindow;
-
     public MainApplicationFrame() {
         setContentPane(desktopPane);
 
         // Создание внутренних окон
-        logWindow = createLogWindow();
-        gameWindow = new GameWindow();
+        LogWindow logWindow = createLogWindow();
+        addWindow(logWindow);
+
+        GameWindow gameWindow = new GameWindow();
+        gameWindow.setSize(400, 400);
+        addWindow(gameWindow);
 
         menuWindow = new MenuWindow(this);
         setJMenuBar(menuWindow.generateMenuBar());
 
+        // Handle window closing event
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
         addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
-                handleExit();
+                menuWindow.confirmExit();
             }
         });
-
-        addWindow(logWindow);
-        addWindow(gameWindow);
     }
 
     protected LogWindow createLogWindow() {
         LogWindow logWindow = new LogWindow(Logger.getDefaultLogSource());
+        logWindow.setLocation(10, 10);
+        logWindow.setSize(300, 800);
+        setMinimumSize(logWindow.getSize());
+        logWindow.pack();
         Logger.debug("Протокол работает");
         return logWindow;
     }
@@ -44,15 +49,5 @@ public class MainApplicationFrame extends JFrame {
     protected void addWindow(JInternalFrame frame) {
         desktopPane.add(frame);
         frame.setVisible(true);
-    }
-
-    private void saveWindowStates() {
-        logWindow.save();
-        gameWindow.save();
-    }
-
-    public void handleExit() {
-        saveWindowStates();
-        menuWindow.confirmExit();
     }
 }
