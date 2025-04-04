@@ -34,7 +34,7 @@ public class MenuWindow {
         fileMenu.setMnemonic(KeyEvent.VK_F);
 
         JMenuItem exitItem = new JMenuItem("Выход", KeyEvent.VK_X);
-        exitItem.addActionListener((event) -> confirmExit());
+        exitItem.addActionListener((event) -> mainFrame.handleExit());
         fileMenu.add(exitItem);
 
         return fileMenu;
