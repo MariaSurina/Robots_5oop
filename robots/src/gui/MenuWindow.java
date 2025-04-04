@@ -8,7 +8,6 @@ import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import java.awt.event.KeyEvent;
-
 import log.Logger;
 
 public class MenuWindow {
@@ -34,9 +33,8 @@ public class MenuWindow {
         fileMenu.setMnemonic(KeyEvent.VK_F);
 
         JMenuItem exitItem = new JMenuItem("Выход", KeyEvent.VK_X);
-        exitItem.addActionListener((event) -> mainFrame.handleExit());
+        exitItem.addActionListener((event) -> mainFrame.handleExit()); // Вызываем handleExit
         fileMenu.add(exitItem);
-
         return fileMenu;
     }
 
@@ -97,6 +95,8 @@ public class MenuWindow {
 
             if (response == 0) {
                 System.exit(0);
+            } else {
+                mainFrame.resetClosingFlag();
             }
         });
     }

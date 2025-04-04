@@ -3,12 +3,12 @@ package gui;
 import javax.swing.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-
 import log.Logger;
 
 public class MainApplicationFrame extends JFrame {
     private final JDesktopPane desktopPane = new JDesktopPane();
     private final MenuWindow menuWindow;
+    private boolean isClosing = false; // Флаг для отслеживания процесса закрытия
 
     private LogWindow logWindow;
     private GameWindow gameWindow;
@@ -52,7 +52,15 @@ public class MainApplicationFrame extends JFrame {
     }
 
     public void handleExit() {
-        saveWindowStates();
-        menuWindow.confirmExit();
+        if (!isClosing) {
+            isClosing = true;
+            saveWindowStates();
+            menuWindow.confirmExit(); // Вызываем confirmExit для подтверждения выхода
+        }
+    }
+
+    // Метод для сброса флага isClosing
+    public void resetClosingFlag() {
+        isClosing = false;
     }
 }
