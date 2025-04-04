@@ -8,7 +8,7 @@ import log.Logger;
 public class MainApplicationFrame extends JFrame {
     private final JDesktopPane desktopPane = new JDesktopPane();
     private final MenuWindow menuWindow;
-    private boolean isClosing = false; // Флаг для отслеживания процесса закрытия
+    private boolean isClosing = false; // флаг для закрытия
 
     private LogWindow logWindow;
     private GameWindow gameWindow;
@@ -55,11 +55,10 @@ public class MainApplicationFrame extends JFrame {
         if (!isClosing) {
             isClosing = true;
             saveWindowStates();
-            menuWindow.confirmExit(); // Вызываем confirmExit для подтверждения выхода
+            menuWindow.confirmExit();
         }
     }
 
-    // Метод для сброса флага isClosing
     public void resetClosingFlag() {
         isClosing = false;
     }
