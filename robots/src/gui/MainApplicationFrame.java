@@ -8,17 +8,21 @@ import log.Logger;
 public class MainApplicationFrame extends JFrame {
     private final JDesktopPane desktopPane = new JDesktopPane();
     private final MenuWindow menuWindow;
-    private boolean isClosing = false; // для закрытия
+    private boolean isClosing = false;
 
     private LogWindow logWindow;
     private GameWindow gameWindow;
+    private CoordinatesWindow coordinatesWindow;
+    private RobotModel robotModel;
 
     public MainApplicationFrame() {
+        robotModel = new RobotModel(100, 100);
         setContentPane(desktopPane);
 
-        // Создание внутренних окон
         logWindow = createLogWindow();
-        gameWindow = new GameWindow();
+        gameWindow = new GameWindow(robotModel);
+        coordinatesWindow = new CoordinatesWindow();
+        robotModel.addObserver(coordinatesWindow);
 
         menuWindow = new MenuWindow(this);
         setJMenuBar(menuWindow.generateMenuBar());
@@ -33,6 +37,8 @@ public class MainApplicationFrame extends JFrame {
 
         addWindow(logWindow);
         addWindow(gameWindow);
+        addWindow(coordinatesWindow);
+        loadWindowStates();
     }
 
     protected LogWindow createLogWindow() {
@@ -49,6 +55,13 @@ public class MainApplicationFrame extends JFrame {
     private void saveWindowStates() {
         logWindow.save();
         gameWindow.save();
+        coordinatesWindow.save();
+    }
+
+    private void loadWindowStates() {
+        logWindow.load();
+        gameWindow.load();
+        coordinatesWindow.load();
     }
 
     public void handleExit() {
