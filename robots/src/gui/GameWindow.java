@@ -4,6 +4,7 @@ import javax.swing.JPanel;
 import java.awt.BorderLayout;
 import java.awt.Rectangle;
 import java.util.prefs.Preferences;
+
 public class GameWindow extends JInternalFrame implements WindowState {
     private final GameVisualizer m_visualizer;
     private final Preferences prefs = Preferences.userNodeForPackage(GameWindow.class);

@@ -1,5 +1,4 @@
 package gui;
-
 import java.util.Observable;
 
 public class RobotModel extends Observable {
