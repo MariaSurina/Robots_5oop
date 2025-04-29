@@ -1,4 +1,5 @@
 package gui;
+
 import javax.swing.*;
 import java.awt.*;
 import java.util.Observable;
@@ -17,20 +18,13 @@ public class CoordinatesWindow extends JInternalFrame implements Observer, Windo
     }
 
     @Override
-    public void update(Observable o, Object arg) {
-        if (o instanceof RobotModel) {
-            RobotModel model = (RobotModel) o;
-            StringBuilder sb = new StringBuilder();
-            sb.append("<html>Червяк: (")
-                    .append(String.format("%.1f", model.getPositionX()))
-                    .append(", ")
-                    .append(String.format("%.1f", model.getPositionY()))
-                    .append(") <br>Точка: (")
-                    .append(String.format("%.1f", model.getTargetPositionX()))
-                    .append(", ")
-                    .append(String.format("%.1f", model.getTargetPositionY()))
-                    .append(")</html>");
-            coordinatesLabel.setText(sb.toString());
+    public void update(Observable notif, Object arg) {
+        if (notif instanceof RobotModel && arg instanceof double[]) {
+            double[] coordinates = (double[]) arg;
+            coordinatesLabel.setText(String.format(
+                    "<html>Червяк: (%.1f, %.1f) <br> Точка: (%.1f, %.1f)</html>",
+                    coordinates[0], coordinates[1], coordinates[2], coordinates[3]
+            ));
         }
     }
 
