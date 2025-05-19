@@ -1,6 +1,8 @@
 package gui;
 
 import java.util.Observable;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class RobotModel extends Observable {
     private volatile double positionX;
@@ -11,27 +13,20 @@ public class RobotModel extends Observable {
 
     private static final double maxVelocity = 0.1;
     private static final double maxAngularVelocity = 0.005;
+    private final Timer timer;
 
     public RobotModel(double initialX, double initialY) {
         this.positionX = initialX;
         this.positionY = initialY;
         this.direction = 0;
-    }
+        this.timer = new Timer("robot timer", true);
 
-    public double getPositionX() {
-        return positionX;
-    }
-
-    public double getPositionY() {
-        return positionY;
-    }
-
-    public double getTargetPositionX() {
-        return targetPositionX;
-    }
-
-    public double getTargetPositionY() {
-        return targetPositionY;
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                updatePosition(Integer.MAX_VALUE, Integer.MAX_VALUE);
+            }
+        }, 0, 10);
     }
 
     public double getDirection() {

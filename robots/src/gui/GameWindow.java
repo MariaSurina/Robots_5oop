@@ -12,7 +12,8 @@ public class GameWindow extends JInternalFrame implements WindowState {
     public GameWindow(RobotModel robotModel) {
         super("Игровое поле", true, true, true, true);
         setName("GameWindow");
-        m_visualizer = new GameVisualizer(robotModel);
+        m_visualizer = new GameVisualizer();
+        robotModel.addObserver(m_visualizer);
         JPanel panel = new JPanel(new BorderLayout());
         panel.add(m_visualizer, BorderLayout.CENTER);
         getContentPane().add(panel);
