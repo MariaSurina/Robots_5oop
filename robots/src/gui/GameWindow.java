@@ -1,5 +1,4 @@
 package gui;
-
 import javax.swing.JInternalFrame;
 import javax.swing.JPanel;
 import java.awt.BorderLayout;
@@ -10,17 +9,17 @@ public class GameWindow extends JInternalFrame implements WindowState {
     private final GameVisualizer m_visualizer;
     private final Preferences prefs = Preferences.userNodeForPackage(GameWindow.class);
 
-    public GameWindow() {
+    public GameWindow(RobotModel robotModel) {
         super("Игровое поле", true, true, true, true);
         setName("GameWindow");
         m_visualizer = new GameVisualizer();
+        robotModel.addObserver(m_visualizer);
         JPanel panel = new JPanel(new BorderLayout());
         panel.add(m_visualizer, BorderLayout.CENTER);
         getContentPane().add(panel);
         pack();
         load();
     }
-
     @Override
     public void save() {
         Rectangle bounds = getBounds();
@@ -29,7 +28,6 @@ public class GameWindow extends JInternalFrame implements WindowState {
         prefs.putInt("GameWindow_WIDTH", bounds.width);
         prefs.putInt("GameWindow_HEIGHT", bounds.height);
     }
-
     @Override
     public void load() {
         int x = prefs.getInt("GameWindow_X", 10);
