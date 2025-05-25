@@ -79,7 +79,7 @@ public class MenuWindow {
 
     public void confirmExit() {
         SwingUtilities.invokeLater(() -> {
-            String[] options = {"Да, мне жаль", "Нет Нет Нет!!"};
+            String[] options = {"Да, мне не жаль", "Нет Нет Нет!!"};
 
             int response = JOptionPane.showOptionDialog(
                     mainFrame,
